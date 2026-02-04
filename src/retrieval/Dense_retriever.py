@@ -87,8 +87,8 @@ class DenseRetriever:
 
 # --- TEST IT ---
 # if __name__ == "__main__":
-#     dense_retriever = DenseRetriever()
-
+#     FINAL_DATA_PATH = ""
+#     dense_retriever = DenseRetriever(FINAL_DATA_PATH)
 #     print("\n--- BM25 FAILED HERE. HOW DOES VECTOR SEARCH DO? ---")
 #     results = dense_retriever.search("running shoes for men", top_k=5)
 #     for r in results:
