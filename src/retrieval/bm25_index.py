@@ -94,13 +94,13 @@ class BM25Retriever:
         return results
 
 
-if __name__ == "__main__":
-    # Quick Test
-    # change the data path acoordingly
-    data_path = ""
+# if __name__ == "__main__":
+#     # Quick Test
+#     # change the data path acoordingly
+#     data_path = ""
 
-    retriever = BM25Retriever(data_path)
-    results = retriever.search("running shoes", top_k=3)
+#     retriever = BM25Retriever(data_path)
+#     results = retriever.search("running shoes", top_k=3)
 
-    for r in results:
-        print(f"[{r['score']:.4f}] {r['title']}")
+#     for r in results:
+#         print(f"[{r['score']:.4f}] {r['title']}")
