@@ -1,7 +1,3 @@
-Here is a comprehensive `README.md` file for **NeuralSearch Prime**, tailored to the specifications in your SRS document.
-
----
-
 # NeuralSearch Prime: Hybrid E-Commerce Search & Reranking System
 
 **Version:** 1.0 | **Status:** Production-Ready Blueprint
@@ -19,53 +15,37 @@ The system is optimized for the **Amazon ESCI** dataset (Exact, Substitute, Comp
 ## 🚀 Key Features
 
 ### 1. Hybrid Retrieval (Stage 1)
-
-* 
 **Lexical Search:** BM25 implementation on product titles and descriptions.
-
-
-* 
 **Semantic Search:** k-NN vector search using 384-dimension embeddings.
-
-
-* 
 **Reciprocal Rank Fusion (RRF):** Merges results from lexical and semantic layers without score normalization, ensuring stability across varying score distributions.
-
-
-* 
-*Formula:* , where .
-
-
-
-
 
 ### 2. Rationale-Guided Reranking (Stage 2)
 
-* 
+
 **Distillation:** Uses a "Student" Cross-Encoder distilled from a "Teacher" LLM (e.g., Llama-3).
 
 
-* 
+
 **Dual-Objective Training:** The model is trained to match the teacher's relevance score (MSE Loss) and internalize natural language rationales.
 
 
-* 
+ 
 **Efficiency:** Processes only the top  candidates to maintain low latency.
 
 
 
 ### 3. Production-Ready Infrastructure
 
-* 
-**Platform:** Dockerized microservices orchestrated via Kubernetes (EKS).
+
+* **Platform:** Dockerized microservices orchestrated via Kubernetes (EKS).
 
 
-* 
-**Search Engine:** OpenSearch 2.11+ supporting Neural Search and RRF.
+
+* **Search Engine:** OpenSearch 2.11+ supporting Neural Search and RRF.
 
 
-* 
-**Inference:** Hugging Face Text Embeddings Inference (TEI) or AWS SageMaker.
+
+* **Inference:** Hugging Face Text Embeddings Inference (TEI) or AWS SageMaker.
 
 
 
@@ -75,20 +55,16 @@ The system is optimized for the **Amazon ESCI** dataset (Exact, Substitute, Comp
 
 The system follows a standard multi-stage retrieval architecture:
 
-1. 
-**Ingestion:** Validates product metadata and enforces ESCI relevance mapping ().
+1. **Ingestion:** Validates product metadata and enforces ESCI relevance mapping ().
 
 
-2. 
-**Retrieval:** Parallel execution of BM25 and Dense Vector queries, merged via RRF.
+2. **Retrieval:** Parallel execution of BM25 and Dense Vector queries, merged via RRF.
 
 
-3. 
-**Reranking:** A distilled Cross-Encoder (e.g., MiniLM-6L) re-scores the top 50 results.
+3. **Reranking:** A distilled Cross-Encoder (e.g., MiniLM-6L) re-scores the top 50 results.
 
 
-4. 
-**Fallback:** If the reranker fails, the system transparently returns Stage 1 results.
+4. **Fallback:** If the reranker fails, the system transparently returns Stage 1 results.
 
 
 
@@ -98,18 +74,10 @@ The system follows a standard multi-stage retrieval architecture:
 
 | Metric | Target | Description |
 | --- | --- | --- |
-| **End-to-End Latency** | **< 300ms** | Total time for Retrieval + Rerank 
-
- |
-| **Retrieval Latency** | <br>**< 200ms** | p95 latency for Stage 1 only 
-
- |
-| **Availability** | **99.9%** | Monthly error budget of ~43.8 minutes 
-
- |
-| **Throughput** | **10 RPS** | Supported load for the full pipeline 
-
- |
+| **End-to-End Latency** | **< 300ms** | Total time for Retrieval + Rerank |
+| **Retrieval Latency** | <br>**< 200ms** | p95 latency for Stage 1 only |
+| **Availability** | **99.9%** | Monthly error budget of ~43.8 minutes |
+| **Throughput** | **10 RPS** | Supported load for the full pipeline |
 
 ---
 
@@ -158,15 +126,11 @@ Accepts a natural language query and returns ranked product results.
 
 ### Prerequisites
 
-* 
 **Docker** & **Kubernetes** (EKS preferred).
-
-
 * **OpenSearch 2.11+** instance running.
 * **Python 3.9+** for local development.
 
 ### Environment Variables
-
 Create a `.env` file in the root directory:
 
 ```bash
@@ -205,25 +169,21 @@ Ensure Horizontal Pod Autoscaling is enabled for CPU/Memory scaling.
 
 ## 📊 Operations & Monitoring
 
-* 
-**Dashboards:** Streamlit interface available for side-by-side comparison of "Lexical," "Hybrid," and "Neural" results.
+* **Dashboards:** Streamlit interface available for side-by-side comparison of "Lexical," "Hybrid," and "Neural" results.
 
 
 * **Key Metrics (SLIs):**
-* 
-*OpenSearch:* CPU utilization, JVM heap pressure, thread pool rejections.
+* *OpenSearch:* CPU utilization, JVM heap pressure, thread pool rejections.
 
 
-* 
-*Inference:* SageMaker ModelLatency, InvocationsPerInstance.
+* *Inference:* SageMaker ModelLatency, InvocationsPerInstance.
 
 
 
 
 * **Incident Response:**
 * *Latency Spikes:* Check for long-tail queries or thread pool rejections.
-* 
-*Bad Deployment:* Immediate rollback to previous Cross-Encoder version.
+* *Bad Deployment:* Immediate rollback to previous Cross-Encoder version.
 
 
 
@@ -231,11 +191,5 @@ Ensure Horizontal Pod Autoscaling is enabled for CPU/Memory scaling.
 
 ---
 
-## 📚 References
-
-* 
-**Project SRS:** *NeuralSearch Prime — Hybrid E-Commerce Search & Reranking System* (v1.0).
-
-
-* 
+## 📚 References 
 **Primary Research:** *Rationale-Guided Distillation for E-Commerce...* (ACL Anthology, 2025).
