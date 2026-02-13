@@ -1,8 +1,5 @@
 # NeuralSearch Prime: Hybrid E-Commerce Search & Reranking System
 
-**Version:** 1.0 | **Status:** Production-Ready Blueprint
-
-**Role:** Senior AI Architect / Lead ML Engineer
 
 ## 📖 Overview
 
