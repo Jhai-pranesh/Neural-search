@@ -1,6 +1,8 @@
 from reranker.Hybrid import HybridRetriever
 import random
 import tqdm
+import pandas as pd
+
 
 def mine_hard_negatives(retriever, df_data, num_queries=2000):
     """
@@ -36,3 +38,40 @@ def mine_hard_negatives(retriever, df_data, num_queries=2000):
             pid = r['product_id']
             # Check groud truth for this product
             # If it is in the group data AND has score 0 (Irrelevant)
+            match = group[group['product_id'] == pid]
+
+            if not match.empty:
+                score = match.iloc[0]['relevance_score']
+                if score <= 1:
+                    hard_negatives.append(pid)
+        # 3. Create Triplets
+        # For every positive, pair it with a hard negative found
+        if hard_negatives:
+            # Pick one positive and one hard negative randomly to balance
+            pos = random.choice(positives)
+            neg = random.choice(hard_negatives)
+
+            # Get text for them
+            pos_text = group[group['product_id'] == pos].iloc[0]['text_corpus']
+            neg_text = group[group['product_id'] == neg].iloc[0]['text_corpus']
+
+            training_triplets.append({
+                'query': query,
+                'positive_id': pos,
+                'positive_text': pos_text,
+                'negative_id': neg,
+                'negative_text': neg_text
+            })
+
+    print(f"Mined {len(training_triplets)} Hard Negative Triplets.")
+    return pd.DataFrame(training_triplets)
+
+
+df_clean = "Path_to_clean_data"
+
+hybrid_retriever = HybridRetriever()
+df_triplets = mine_hard_negatives(hybrid_retriever, df_clean, num_queries=2000)
+
+# Save for the next step
+# change the path if required
+df_triplets.to_parquet("../data/hard_negatives_train.parquet")
